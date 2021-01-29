@@ -125,7 +125,7 @@ if(start_date < selectted && end_date > selectted)
                     $("#differrent_text").hide();
                     $( "#push_age" ).text( card_value );
                     var calculate_date = new_current_year - newStr;
-                    var numero_second = result/calculate_date;
+                    var numero_second = card_value/calculate_date;
                     var value_numero = numero_second.toFixed(1);
                     $( "#numero_average" ).text( value_numero );
                     //$().data('age', card_value);
