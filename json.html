@@ -86,7 +86,7 @@ $('#datePicker').datepicker({
   var selectted = fullyear+currMonth+day+new_date;
   //console.log(currMonth.toString().length);
   $.ajax({
-           url: "http://localhost/json_testing/governi.json",
+           url: "https://governi-italia.herokuapp.com/governi.json",
            dataType: "json",
            type: 'GET',
            cache: false,
