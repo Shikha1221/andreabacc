@@ -4,18 +4,16 @@
   <title>Json testing</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.it.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
     <link rel="stylesheet" href="style.css"/>
-
   </head>
 <body>
-
 <div class="container">
   <div class="jumbotron">
     <h1>json Testing</h1>      
@@ -28,49 +26,44 @@ gravida nibh, sed fermentum tellus.</p>
             <div class='input-group date' id='datePicker'>
                <input type='text' class="form-control" id="selected_date"/>
                <span class="input-group-addon">
-               <span class="glyphicon glyphicon-calendar"></span>
+              <span class="glyphicon glyphicon-calendar"></span>
                </span>
             </div>      
 </div>
 </div>
 <div class="jumbotron col-md-12 text-center">
+  <p id="differrent_text"></p>
     <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<span id="push_age"></span><span id="not_found"></span> </h3>
-     <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span id="numero_average"></span></h3>       
-
+     <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span id="numero_average"></span></h3>
   </div>
 <div class="col-md-12">
-  
                   <div class="icon-container1 d-flex" id="social_media">
                     <ul>
                       <li><button type="button" id="share_facebook" class="fa fa-facebook  social_button" data-age ="" data-average=""></button></li>
                       <li><button type="button" id="share_twitter" class="fa fa-twitter social_button"></button></li>
                       <li><button  type="button" id="share_whatsapp" class="fa fa-whatsapp  social_button"></button></li>
                     </ul>
-  
                   </div>
-                 
-              
-  <button type="button" class="btn btn-success col-md-6 col-md-offset-3 col-xs-12" id="share_button" style="    margin-bottom: 30px;">Share</button>
-      
+  <button type="button" class="btn btn-success col-md-6 col-xs-12 col-md-offset-3  " id="share_button" style="margin-bottom:30px">Share</button>
 </div>
-
 </body>
   <script type="text/javascript">
-  
-  
-
-
 $(document).ready(function() {
+ //$.datepicker.regional['it'];
+ 
+ 
 $("#not_found").hide();
 $('.social_button').hide();
+
 $('#datePicker').datepicker({
-  //DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH),
+ 
   format: "dd/mm/yyyy",
   //format: "T 12",
   orientation: "top",
   autoclose: true,
+  language: "it-IT",
+    //locale: "id",
 }).on('changeDate', function(e){
- 
   var selected = $("#selected_date").val();
   var day = new Date(e.date).getDate();
   if(day.toString().length ==1)
@@ -86,14 +79,14 @@ $('#datePicker').datepicker({
   var selectted = fullyear+currMonth+day+new_date;
   //console.log(currMonth.toString().length);
   $.ajax({
-           url: "https://governi-italia.herokuapp.com/governi.json",
+           url: "governi.json",
            dataType: "json",
            type: 'GET',
            cache: false,
            async: false,
            beforeSend: function(xhr){xhr.setRequestHeader('X-Test-Header', 'test-value');},
            success: function (data) {
-            $.each(data, function(i, field){
+           $.each(data, function(i, field){
               var product_data = field;
             var total_length = data.length;  
   var numero_age = field.NumeroGoverno;
@@ -102,25 +95,40 @@ $('#datePicker').datepicker({
     var result = [];
     var not_found = [];
    //console.log(selectted);
-   var average_date = end_date.substring(0, 4);
-                    
+   var average_date = end_date.substring(0, 4);                    
                     var newStr = fullyear.replace(/-/g, ' ');
                     //console.log( newStr );
                     var new_current_year = new Date().getFullYear();
-    if(start_date < selectted && end_date > selectted)
+    if(fullyear <= "1946"){
+      var last_data =data[total_length-1].NumeroGoverno;
+      console.log(last_data);
+      $( "#push_age" ).text( last_data );
+                    var new_calculate_date = new_current_year - newStr;
+                    var new_numero_second = last_data/new_calculate_date;
+                    var new_numero_value = new_numero_second.toFixed(1);
+                    $("#differrent_text").show();
+                     $( "#differrent_text" ).text("we should display a different text");
+                    $( "#numero_average" ).text( new_numero_value );
+                    //$().data('age', card_value);
+                    return false;
+                     //$( "#push_age" ).append(card_value);
+return false;
+    }
+    else
+    {
+if(start_date < selectted && end_date > selectted)
         {
                       result.push(numero_age);
                       var card_value=  total_length - result +1;
                      //console.log(result);
                     // $("#push_age").replaceWith(" ");
-                   
+                    $("#differrent_text").hide();
                     $( "#push_age" ).text( card_value );
                     var calculate_date = new_current_year - newStr;
                     var numero_second = result/calculate_date;
-                    var value_numero = numero_second.toFixed(5);
+                    var value_numero = numero_second.toFixed(1);
                     $( "#numero_average" ).text( value_numero );
                     //$().data('age', card_value);
-                    
                     return false;
                      //$( "#push_age" ).append(card_value);
                       }
@@ -128,47 +136,24 @@ $('#datePicker').datepicker({
                         not_found.push("1");
                         var calculate_date = new_current_year - newStr;
                     var numero_second = not_found/calculate_date;
-                    var value_numero = numero_second.toFixed(5);
-                    //console.log(calculate_date);
-                    //console.log(numero_second);
-                    //console.log(value_numero);
+                    var value_numero = numero_second.toFixed(1)
                     $( "#numero_average" ).text( value_numero );
+                    $("#differrent_text").hide();
                     $('.social_button').attr('data-age', not_found);
                     $('.social_button').attr('data-average', value_numero);
                         $( "#push_age" ).text( not_found );
                       }
-
-//var results = document.querySelector("#results"); // debugging
-//results.innerHTML = JSON.stringify(filteredDates); // debugging
-            //console.log(startdate);
-           /* var length = data.length;
-   console.log(length);
-    var result = [];
-    for (var i = 0; i< length ; i++){
-        if(selected>start_date && selected<start_date))
-        {
-                      result.push(data[i]);
-                      console.log("yes");
-                      }
-                      else{
-                        console.log("no");
-                      }
-    }*/
-          
-          });
-       
- 
-
-        } 
-});
-
+    }
+     });
+        }
 });
 });
+});
+
       </script>
     <script>
       $('#share_button').on("mouseenter", function(){
         $('.social_button').show(500);
-        
        });
        $('#share_button').on("click", function(){
         $('.social_button').hide(500);;
@@ -178,31 +163,22 @@ $('#datePicker').datepicker({
       $("#share_facebook").on("click", function() {
        var age= $(this).attr("data-age")
        var average= $(this).attr("data-average")
-       //var pageUrl = encodeURIComponent(document.URL);
-          url = "https://www.facebook.com/sharer/sharer.php?age=" + age+"&average"+average;
+       var pageUrl = encodeURIComponent(document.URL);
+          url = "https://www.facebook.com/sharer/sharer.php?u="+pageUrl+"&result1" + age+"&result2="+average;
           window.location.replace(url);
-          //socialWindow(url);
-          //console.log(pageUrl);
-          //console.log(average);
       });
+
       $("#share_twitter").on("click", function() {
         var age= $(this).attr("data-age")
        var average= $(this).attr("data-average")
-          url = "https://twitter.com/intent/tweet?age=" + age+"&average"+average;
+          url = "https://twitter.com/intent/tweet?result1=" + age+"&result2="+average;
           window.location.replace(url);
-          //socialWindow(url);
-          //console.log(url);
-          //console.log(average);
       });
       $("#share_whatsapp").on("click", function() {
         var age= $(this).attr("data-age")
        var average= $(this).attr("data-average")
-       var whatsapp_url = "whatsapp://send?age=" + age+"&average"+average;
+       var whatsapp_url = " https://api.whatsapp.com/send?phone=?result1=" + age+"&result2="+average;
 window.location.href = whatsapp_url;
-         
-          //socialWindow(url);
-          console.log(whatsapp_url);
-          //console.log(average);
       });
     </script>
 </html>
