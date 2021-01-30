@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Json testing</title>
+  <title>Governi Italiani</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -12,14 +12,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css"/>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-60425C57SZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-60425C57SZ');
+</script>
+    
   </head>
 <body>
 <div class="container">
   <div class="jumbotron">
-    <h1>json Testing</h1>      
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor ante vitae
-libero porta, eu ultricies ligula pretium. Nullam sed pharetra est. Sed convallis
-gravida nibh, sed fermentum tellus.</p>
+    <h1 alighn="center">Quanti governi ci sono stati in Italia dalla tua nascita?</h1>      
+    <p>Questa pagina è stata creata a Gennaio 2021, quando stiamo assistendo all'ennesima caduta di un governo. Stanco di tutto questo mi sono chiesto quanti governi si sono alternati in Italia da quando sono nato.<br><br>
+        Qua sotto potente calcolarlo anche voi.</p>
   </div>
   <div class='col-sm-12 align-items-center'>
          <div class="form-group col-md-4 col-md-offset-4">
@@ -33,8 +42,8 @@ gravida nibh, sed fermentum tellus.</p>
 </div>
 <div class="jumbotron col-md-12 text-center">
   <p id="differrent_text"></p>
-    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<span id="push_age"></span><span id="not_found"></span> </h3>
-     <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span id="numero_average"></span></h3>
+    <h3>Da quanto sei nato/a ci sono stati <span id="push_age"></span><span id="not_found"></span>governi.</h3>
+     <h3>La durata media dei governi è stata <span id="numero_average"></span> anni.</h3>
   </div>
 <div class="col-md-12">
                   <div class="icon-container1 d-flex" id="social_media">
