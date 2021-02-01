@@ -108,7 +108,7 @@ $('#datePicker').datepicker({
                     var newStr = fullyear.replace(/-/g, ' ');
                     //console.log( newStr );
                     var new_current_year = new Date().getFullYear();
-    if(selectted < "1946-07-14T12:00:00.000Z"){
+    if(selectted <= "1946-07-14T12:00:00.000Z"){
       var last_data =data[total_length-1].NumeroGoverno;
       //console.log(last_data);
       $( "#push_age" ).text( last_data );
