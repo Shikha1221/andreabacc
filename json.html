@@ -108,7 +108,7 @@ $('#datePicker').datepicker({
                     var newStr = fullyear.replace(/-/g, ' ');
                     //console.log( newStr );
                     var new_current_year = new Date().getFullYear();
-    if(selectted <= "1946-07-14T12:00:00.000Z"){
+    if(selectted < "1946-07-14T12:00:00.000Z"){
       var last_data =data[total_length-1].NumeroGoverno;
       //console.log(last_data);
       $( "#push_age" ).text( last_data );
@@ -133,8 +133,12 @@ if(start_date < selectted && end_date > selectted)
                     // $("#push_age").replaceWith(" ");
                     $("#differrent_text").hide();
                     $( "#push_age" ).text( card_value );
+                    //console.log(new_current_year);
+                    //console.log(newStr);
                     var calculate_date = new_current_year - newStr;
-                    var numero_second = card_value/calculate_date;
+                     //console.log(calculate_date);
+                    var numero_second = calculate_date/card_value;
+                     //console.log(numero_second);
                     var value_numero = numero_second.toFixed(1);
                     $( "#numero_average" ).text( value_numero );
                     //$().data('age', card_value);
